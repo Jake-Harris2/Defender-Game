@@ -11,7 +11,7 @@ public class PlayerMotor : MonoBehaviour
     private Camera gameCamera;
     private SpriteRenderer playerRenderer;
 
-    private float movementSpeed = 3f;
+    private float movementSpeed = 8f;
 
     private float movementLerpAmount;
     private Vector2 cameraCenter;
@@ -36,7 +36,7 @@ public class PlayerMotor : MonoBehaviour
         {
             Vector2 lerpPositionScreen = cameraCenter + new Vector2(movementLerpAmount * -horizontalInput, 0);
             Vector2 lerpPostionGame = gameCamera.ScreenToWorldPoint(lerpPositionScreen);
-            transform.position = Vector2.Lerp(transform.position, new Vector2(lerpPostionGame.x, transform.position.y), 0.06f);
+            transform.position = Vector2.Lerp(transform.position, new Vector2(lerpPostionGame.x, transform.position.y), 0.04f);
             if(horizontalInput > 0)
             {
                 playerRenderer.flipX = false;
@@ -48,7 +48,7 @@ public class PlayerMotor : MonoBehaviour
         }
         else
         {
-            transform.position = Vector2.Lerp(transform.position, new Vector2(0,transform.position.y), 0.03f);
+            transform.position = Vector2.Lerp(transform.position, new Vector2(0,transform.position.y), 0.01f);
         }
 
         if(verticalInput != 0)
