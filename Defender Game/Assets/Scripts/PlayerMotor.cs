@@ -29,8 +29,8 @@ public class PlayerMotor : MonoBehaviour
     {
         Vector2 shipVerticalMovement = Vector2.zero;
 
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        float verticalInput = Input.GetAxisRaw("Vertical");
+        float horizontalInput = Mathf.Round(Input.GetAxisRaw("Horizontal"));
+        float verticalInput = Mathf.Round(Input.GetAxisRaw("Vertical"));
 
         if(horizontalInput != 0)
         {

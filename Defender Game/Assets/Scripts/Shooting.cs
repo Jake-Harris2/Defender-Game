@@ -10,6 +10,8 @@ public class Shooting : MonoBehaviour
     private SpriteRenderer playerRenderer;
     private ParticleSystem particleSystem;
 
+    private Color[] trailColours = { new Color(0, 255, 255), new Color(255, 255, 0), new Color(0, 255, 0), new Color(255, 0, 255) };
+
     [SerializeField]
     private Rigidbody2D projectilePrefab;
 	
@@ -21,9 +23,12 @@ public class Shooting : MonoBehaviour
 
 	void Update ()
     {
-		if((Time.time - lastShootTime > shootingCooldown) && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.Space)))
+		if((Time.time - lastShootTime > shootingCooldown) && Input.GetAxis("Fire") != 0)
         {
             Rigidbody2D projectileInstance = Instantiate(projectilePrefab, transform.position, Quaternion.identity) as Rigidbody2D;
+            particleSystem = projectileInstance.GetComponent<ParticleSystem>();
+            var psMain = particleSystem.main;
+            psMain.startColor = trailColours[Random.Range(0, 4)];
             if(playerRenderer.flipX)
             {
                 projectileInstance.AddForce(new Vector2(-2000, 0));
