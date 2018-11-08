@@ -12,6 +12,7 @@ public class PlayerMotor : MonoBehaviour
     private SpriteRenderer playerRenderer;
 
     private float movementSpeed = 8f;
+    private float backgroundScrollingSpeed = 0f;
 
     private float movementLerpAmount;
     private Vector2 cameraCenter;
@@ -56,5 +57,14 @@ public class PlayerMotor : MonoBehaviour
             shipVerticalMovement = Vector2.up * verticalInput * movementSpeed;
             playerRigidbody.MovePosition(playerRigidbody.position + shipVerticalMovement * Time.deltaTime);
         }
+
 	}
+
+    public float GetBackgroundScrollSpeed()
+    {
+        Vector2 shipScreenPosition = gameCamera.WorldToScreenPoint(gameObject.transform.position);
+        float shipScreenPercentage = (cameraCenter.x - shipScreenPosition.x) / gameCamera.pixelWidth;
+        float backgroundScrollingSpeed = 1 * shipScreenPercentage;
+        return backgroundScrollingSpeed;
+    }
 }
