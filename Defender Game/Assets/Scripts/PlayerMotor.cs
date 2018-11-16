@@ -67,6 +67,7 @@ public class PlayerMotor : MonoBehaviour
     {
         Vector2 shipScreenPosition = gameCamera.WorldToScreenPoint(gameObject.transform.position);
         float shipScreenPercentage = (cameraCenter.x - shipScreenPosition.x) / gameCamera.pixelWidth;
+        Debug.Log(shipScreenPercentage);
         float backgroundScrollingSpeed = 1 * shipScreenPercentage;
         return backgroundScrollingSpeed;
     }
