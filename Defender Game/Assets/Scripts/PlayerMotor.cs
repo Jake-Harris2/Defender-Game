@@ -7,19 +7,25 @@ using UnityEngine;
 public class PlayerMotor : MonoBehaviour
 {
 
-    private Rigidbody2D playerRigidbody;
     [SerializeField]
     private Camera gameCamera;
-    private SpriteRenderer playerRenderer;
     [SerializeField]
     private Animator playerAnimator;
+    [SerializeField]
+    private Transform cameraTransforms;
 
-    private float movementSpeed = 8f;
-
+    private Rigidbody2D playerRigidbody;
+    private SpriteRenderer playerRenderer;
+    private float verticalMovementSpeed = 8f;
+    private float cameraMovementSpeed = 20f;
+    private float currentCameraMovementSpeed;
     private float movementLerpAmount;
     private Vector2 cameraCenter;
+    private float acceleration = 5f;
+    private bool lastMovingRight;
 
-	void Start ()
+
+    void Start ()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
         movementLerpAmount = gameCamera.pixelWidth / 2f * 0.8f;
@@ -29,35 +35,61 @@ public class PlayerMotor : MonoBehaviour
 	
 	void Update ()
     {
-        Vector2 shipVerticalMovement = Vector2.zero;
 
         float horizontalInput = Mathf.Round(Input.GetAxisRaw("Horizontal"));
         float verticalInput = Mathf.Round(Input.GetAxisRaw("Vertical"));
 
-        if(horizontalInput != 0)
+        Vector3 cameraMovement = Vector3.zero;
+
+        transform.position = Vector2.Lerp(transform.position, new Vector2(gameCamera.transform.position.x, transform.position.y), cameraMovementSpeed/400f);
+
+        if(lastMovingRight)
         {
-            Vector2 lerpPositionScreen = cameraCenter + new Vector2(movementLerpAmount * -horizontalInput, 0);
-            Vector2 lerpPostionGame = gameCamera.ScreenToWorldPoint(lerpPositionScreen);
-            transform.position = Vector2.Lerp(transform.position, new Vector2(lerpPostionGame.x, transform.position.y), 0.04f);
-            if(horizontalInput > 0)
+            cameraMovement = Vector3.right * currentCameraMovementSpeed;
+        }
+        else
+        {
+            cameraMovement = Vector3.right * -currentCameraMovementSpeed;
+        }
+
+        cameraTransforms.position = cameraTransforms.position + cameraMovement * Time.deltaTime;
+
+        if (horizontalInput != 0)
+        {
+            currentCameraMovementSpeed += acceleration * Time.deltaTime;
+            if(currentCameraMovementSpeed > cameraMovementSpeed)
             {
+                currentCameraMovementSpeed = cameraMovementSpeed;
+            }
+            if (horizontalInput > 0)
+            {
+                lastMovingRight = true;
                 playerRenderer.flipX = false;
             }
-            if(horizontalInput < 0)
+            if (horizontalInput < 0)
             {
+                lastMovingRight = false;
                 playerRenderer.flipX = true;
             }
             playerAnimator.SetFloat("Input", Mathf.Abs(horizontalInput));
         }
         else
         {
-            transform.position = Vector2.Lerp(transform.position, new Vector2(0,transform.position.y), 0.01f);
+            currentCameraMovementSpeed -= acceleration * Time.deltaTime;
+            cameraMovement = Vector3.right * horizontalInput * currentCameraMovementSpeed;
+            if (currentCameraMovementSpeed < 0)
+            {
+                currentCameraMovementSpeed = 0;
+            }
+            cameraTransforms.position = cameraTransforms.position + cameraMovement * Time.deltaTime;
             playerAnimator.SetFloat("Input", 0f);
         }
 
-        if(verticalInput != 0)
+        Vector2 shipVerticalMovement = Vector2.zero;
+
+        if (verticalInput != 0)
         {
-            shipVerticalMovement = Vector2.up * verticalInput * movementSpeed;
+            shipVerticalMovement = Vector2.up * verticalInput * verticalMovementSpeed;
             playerRigidbody.MovePosition(playerRigidbody.position + shipVerticalMovement * Time.deltaTime);
         }
 
