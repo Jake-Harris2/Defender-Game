@@ -8,11 +8,13 @@ public class PlayerMotor : MonoBehaviour
 {
 
     private Rigidbody2D playerRigidbody;
+    [SerializeField]
     private Camera gameCamera;
     private SpriteRenderer playerRenderer;
+    [SerializeField]
+    private Animator playerAnimator;
 
     private float movementSpeed = 8f;
-    private float backgroundScrollingSpeed = 0f;
 
     private float movementLerpAmount;
     private Vector2 cameraCenter;
@@ -20,8 +22,7 @@ public class PlayerMotor : MonoBehaviour
 	void Start ()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
-        gameCamera = FindObjectOfType<Camera>();
-        movementLerpAmount = gameCamera.pixelWidth / 2f * 0.9f;
+        movementLerpAmount = gameCamera.pixelWidth / 2f * 0.8f;
         cameraCenter = new Vector2(gameCamera.pixelWidth / 2f, gameCamera.pixelHeight / 2f);
         playerRenderer = GetComponent<SpriteRenderer>();
 	}
@@ -46,10 +47,12 @@ public class PlayerMotor : MonoBehaviour
             {
                 playerRenderer.flipX = true;
             }
+            playerAnimator.SetFloat("Input", Mathf.Abs(horizontalInput));
         }
         else
         {
             transform.position = Vector2.Lerp(transform.position, new Vector2(0,transform.position.y), 0.01f);
+            playerAnimator.SetFloat("Input", 0f);
         }
 
         if(verticalInput != 0)
