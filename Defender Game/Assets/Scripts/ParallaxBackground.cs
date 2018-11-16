@@ -34,6 +34,7 @@ public class ParallaxBackground : MonoBehaviour
     {
         float cameraDeltaX = cameraTransform.position.x - lastCameraX;
         transform.position += Vector3.right * (cameraDeltaX * parallaxSpeed);
+        lastCameraX = cameraTransform.position.x;
 		if(cameraTransform.position.x < (backgroundStates[leftIndex].transform.position.x + viewZone))
         {
             ScrollLeft();
@@ -47,8 +48,7 @@ public class ParallaxBackground : MonoBehaviour
 
     private void ScrollLeft()
     {
-        int lastRight = rightIndex;
-        backgroundStates[rightIndex].position = Vector3.right * (backgroundStates[leftIndex].position.x - backgroundLength);
+        backgroundStates[rightIndex].position = new Vector3(backgroundStates[leftIndex].position.x - backgroundLength, backgroundStates[leftIndex].position.y, 0);
         leftIndex = rightIndex;
         rightIndex--;
         if(rightIndex < 0)
@@ -59,8 +59,7 @@ public class ParallaxBackground : MonoBehaviour
 
     private void ScrollRight()
     {
-        int lastLeft = leftIndex;
-        backgroundStates[leftIndex].position = Vector3.right * (backgroundStates[rightIndex].position.x + backgroundLength);
+        backgroundStates[leftIndex].position = new Vector3(backgroundStates[rightIndex].position.x + backgroundLength, backgroundStates[leftIndex].position.y, 0);
         rightIndex = leftIndex;
         leftIndex++;
         if (leftIndex == backgroundStates.Length)

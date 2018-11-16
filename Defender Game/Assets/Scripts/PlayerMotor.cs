@@ -22,9 +22,6 @@ public class PlayerMotor : MonoBehaviour
     private float movementLerpAmount;
     private Vector2 cameraCenter;
     private float acceleration = 20f;
-    private bool lastMovingRight;
-    private float startTime;
-
 
     void Start ()
     {
@@ -32,12 +29,10 @@ public class PlayerMotor : MonoBehaviour
         movementLerpAmount = gameCamera.pixelWidth / 2f * 0.8f;
         cameraCenter = new Vector2(gameCamera.pixelWidth / 2f, gameCamera.pixelHeight / 2f);
         playerRenderer = GetComponent<SpriteRenderer>();
-        startTime = Time.time;
 	}
 	
 	void Update ()
     {
-        float t = (Time.time - startTime) / acceleration;
 
         float horizontalInput = Mathf.Round(Input.GetAxisRaw("Horizontal"));
         float verticalInput = Mathf.Round(Input.GetAxisRaw("Vertical"));
@@ -52,7 +47,6 @@ public class PlayerMotor : MonoBehaviour
         {
             if (horizontalInput > 0)
             {
-                lastMovingRight = true;
                 playerRenderer.flipX = false;
                 currentCameraMovementSpeed += acceleration * Time.deltaTime;
                 if (currentCameraMovementSpeed > cameraMovementSpeed)
@@ -62,7 +56,6 @@ public class PlayerMotor : MonoBehaviour
             }
             if (horizontalInput < 0)
             {
-                lastMovingRight = false;
                 playerRenderer.flipX = true;
                 currentCameraMovementSpeed -= acceleration * Time.deltaTime;
                 if (currentCameraMovementSpeed < -cameraMovementSpeed)
@@ -74,7 +67,7 @@ public class PlayerMotor : MonoBehaviour
         }
         else
         {
-            currentCameraMovementSpeed = Mathf.Lerp(currentCameraMovementSpeed, 0, cameraMovementSpeed / 400f);
+            currentCameraMovementSpeed = Mathf.Lerp(currentCameraMovementSpeed, 0, cameraMovementSpeed / 700f);
             playerAnimator.SetFloat("Input", 0f);
         }
 
