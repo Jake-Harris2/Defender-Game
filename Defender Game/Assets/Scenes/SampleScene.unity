@@ -335,7 +335,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 1, b: 1, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -754,7 +754,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 1, b: 1, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -1314,6 +1314,16 @@ Prefab:
       propertyPath: cameraTransforms
       value: 
       objectReference: {fileID: 87972757}
+    - target: {fileID: 61383944540191386, guid: e4e6522ad0db1fd41ad37eb4fbfa114a,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 4.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 61383944540191386, guid: e4e6522ad0db1fd41ad37eb4fbfa114a,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 7.52
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4e6522ad0db1fd41ad37eb4fbfa114a, type: 2}
   m_IsPrefabAsset: 0
@@ -1593,6 +1603,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backgroundLength: 53.57
   cameraTransform: {fileID: 519420032}
+  parallaxSpeed: 0
 --- !u!1 &2110152485
 GameObject:
   m_ObjectHideFlags: 0
