@@ -8,7 +8,7 @@ public class Shooting : MonoBehaviour
     private float lastShootTime;
     private float shootingCooldown = 0.3f;
     private SpriteRenderer playerRenderer;
-    private ParticleSystem particleSystem;
+    private ParticleSystem playerParticleSystem;
 
     private Color[] trailColours = { new Color(0, 255, 255), new Color(255, 255, 0), new Color(0, 255, 0), new Color(255, 0, 255) };
 
@@ -26,8 +26,8 @@ public class Shooting : MonoBehaviour
 		if((Time.time - lastShootTime > shootingCooldown) && Input.GetAxis("Fire") != 0)
         {
             Rigidbody2D projectileInstance = Instantiate(projectilePrefab, transform.position, Quaternion.identity) as Rigidbody2D;
-            particleSystem = projectileInstance.GetComponent<ParticleSystem>();
-            var psMain = particleSystem.main;
+            playerParticleSystem = projectileInstance.GetComponent<ParticleSystem>();
+            var psMain = playerParticleSystem.main;
             psMain.startColor = trailColours[Random.Range(0, 4)];
             if(playerRenderer.flipX)
             {
