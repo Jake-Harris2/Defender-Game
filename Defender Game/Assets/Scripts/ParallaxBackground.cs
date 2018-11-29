@@ -55,6 +55,12 @@ public class ParallaxBackground : MonoBehaviour
         {
             rightIndex = backgroundStates.Length - 1;
         }
+        foreach (Transform bg in backgroundStates)
+        {
+            bg.gameObject.name = "-";
+        }
+        backgroundStates[leftIndex].gameObject.name = "Left";
+        backgroundStates[rightIndex].gameObject.name = "Right";
     }
 
     private void ScrollRight()
@@ -66,5 +72,11 @@ public class ParallaxBackground : MonoBehaviour
         {
             leftIndex = 0;
         }
+        foreach (Transform bg in backgroundStates)
+        {
+            bg.gameObject.name = "-";
+        }
+        backgroundStates[leftIndex].gameObject.name = "Left";
+        backgroundStates[rightIndex].gameObject.name = "Right";
     }
 }

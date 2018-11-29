@@ -23,7 +23,7 @@ public class Shooting : MonoBehaviour
 
 	void Update ()
     {
-		if((Time.time - lastShootTime > shootingCooldown) && Input.GetAxis("Fire") != 0)
+		if((Time.time - lastShootTime > shootingCooldown) && Input.GetAxisRaw("Fire") != 0)
         {
             Rigidbody2D projectileInstance = Instantiate(projectilePrefab, transform.position, Quaternion.identity) as Rigidbody2D;
             playerParticleSystem = projectileInstance.GetComponent<ParticleSystem>();
