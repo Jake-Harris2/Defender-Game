@@ -28,6 +28,7 @@ public class SmartBomb : MonoBehaviour
             {
                 if (GeometryUtility.TestPlanesAABB(planes, spawnedNPC[i].GetComponent<Collider2D>().bounds))
                 {
+                    GameObject.FindGameObjectWithTag("Scripts").GetComponent<PlayerStats>().addScore(spawnedNPC[i].GetComponent<NPC>().score);
                     Destroy(spawnedNPC[i]);
                 }
             }

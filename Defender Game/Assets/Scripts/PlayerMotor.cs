@@ -14,6 +14,8 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField]
     private Transform cameraTransforms;
 
+    private float lastWarpTime;
+    private float warpCooldown = 0.3f;
     private Rigidbody2D playerRigidbody;
     private SpriteRenderer playerRenderer;
     private float verticalMovementSpeed = 8f;
@@ -21,19 +23,20 @@ public class PlayerMotor : MonoBehaviour
     private float currentCameraMovementSpeed;
     private float acceleration = 20f;
 
-    void Start ()
+    void Start()
     {
+        lastWarpTime = Time.time;
         playerRigidbody = GetComponent<Rigidbody2D>();
         playerRenderer = GetComponent<SpriteRenderer>();
-	}
-	
-	void Update ()
+    }
+
+    void Update()
     {
 
         float horizontalInput = Mathf.Round(Input.GetAxisRaw("Horizontal"));
         float verticalInput = Mathf.Round(Input.GetAxisRaw("Vertical"));
 
-        transform.position = Vector2.Lerp(transform.position, new Vector2(gameCamera.transform.position.x, transform.position.y), cameraMovementSpeed/400f);
+        transform.position = Vector2.Lerp(transform.position, new Vector2(gameCamera.transform.position.x, transform.position.y), cameraMovementSpeed / 400f);
 
         Vector3 cameraMovement = Vector3.right * currentCameraMovementSpeed;
 
@@ -75,5 +78,10 @@ public class PlayerMotor : MonoBehaviour
             playerRigidbody.MovePosition(playerRigidbody.position + shipVerticalMovement * Time.deltaTime);
         }
 
-	}
+        if ((Time.time - lastWarpTime > warpCooldown) && Input.GetAxisRaw("Warp") != 0)
+        {
+            cameraTransforms.position = cameraTransforms.position + Vector3.right * (100f + Random.Range(-100f, 100f));
+            lastWarpTime = Time.time;
+        }
+    }
 }

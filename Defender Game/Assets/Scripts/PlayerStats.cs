@@ -16,10 +16,11 @@ public class PlayerStats : MonoBehaviour
     private Transform[] bombIconsTransforms;
     private int playerScore;
     private int playerLives;
+    private int liveBombsAwarded;
 
     void Start ()
     {
-        playerScore = 0;
+        liveBombsAwarded = 1;
         playerScoreText.text = playerScore.ToString();
         smartBombs = 3;
         playerLives = 3;
@@ -39,6 +40,12 @@ public class PlayerStats : MonoBehaviour
     {
         playerScore += score;
         playerScoreText.text = playerScore.ToString();
+        if(playerScore/1000 >= liveBombsAwarded)
+        {
+            addBomb(1);
+            addLife(1);
+            liveBombsAwarded += 1;
+        }
     }
 
     public void addBomb(int bomb)
