@@ -2,6 +2,9 @@
 
 public class NPCDeathScript : MonoBehaviour
 {
+    [SerializeField]
+    private ParticleSystem deathParticleSystem;
+
     private NPCSpawner nPCSpawner;
 
     private void Start()
@@ -13,6 +16,7 @@ public class NPCDeathScript : MonoBehaviour
         if (collision.gameObject.tag == "Projectile")
         {
             GameObject.FindGameObjectWithTag("Scripts").GetComponent<PlayerStats>().addScore(gameObject.GetComponent<NPC>().score);
+            Instantiate(deathParticleSystem, gameObject.transform.position, Quaternion.identity);
             Destroy(this.gameObject);
             Destroy(collision.gameObject);
             nPCSpawner.StartCoroutine(GameObject.FindGameObjectWithTag("Scripts").GetComponent<NPCSpawner>().ClearDeadNPC());

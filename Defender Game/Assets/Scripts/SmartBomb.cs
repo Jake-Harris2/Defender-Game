@@ -6,6 +6,8 @@ public class SmartBomb : MonoBehaviour
 {
     [SerializeField]
     private Camera gameCamera;
+    [SerializeField]
+    private ParticleSystem deathParticleSystem;
 
     private float lastBombTime;
     private float bombCooldown = 1f;
@@ -29,6 +31,7 @@ public class SmartBomb : MonoBehaviour
                 if (GeometryUtility.TestPlanesAABB(planes, spawnedNPC[i].GetComponent<Collider2D>().bounds))
                 {
                     GameObject.FindGameObjectWithTag("Scripts").GetComponent<PlayerStats>().addScore(spawnedNPC[i].GetComponent<NPC>().score);
+                    Instantiate(deathParticleSystem, spawnedNPC[i].transform.position, Quaternion.identity);
                     Destroy(spawnedNPC[i]);
                 }
             }

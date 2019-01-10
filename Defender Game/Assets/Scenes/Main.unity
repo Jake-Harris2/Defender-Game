@@ -2768,6 +2768,12 @@ Prefab:
       propertyPath: cameraTransforms
       value: 
       objectReference: {fileID: 87972757}
+    - target: {fileID: 114303408268475994, guid: e4e6522ad0db1fd41ad37eb4fbfa114a,
+        type: 2}
+      propertyPath: deathParticleSystem
+      value: 
+      objectReference: {fileID: 198935441284506968, guid: 99186ee17ff029546bb400b9c056e6b8,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4e6522ad0db1fd41ad37eb4fbfa114a, type: 2}
   m_IsPrefabAsset: 0
